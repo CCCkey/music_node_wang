@@ -3,6 +3,8 @@ const app = express();
 //app.get('/',(req,res)=>res.send('hello!'));
 const bodyParser = require("body-parser");
 const user = require("./routes/user.route.js");
+const music = require("./routes/music.route.js");
+const comment = require("./routes/comment.route.js");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -24,7 +26,8 @@ app.use(session({
     },
 }));
 
-app.use("/users", user);
+
+app.use("/public", express.static("public"));
 app.use(express.static('views'));
 
 let print = function(req, res, next) { // ES6 let	
@@ -40,6 +43,10 @@ let print = function(req, res, next) { // ES6 let
 	next(); // 执行下一个中间件
 }
 app.use(print); // 加载自定义中间件
+
+app.use("/api/v1/users", user);
+app.use("/api/v1/musics", music); // 加载音乐路由
+app.use("/api/v1/comments", comment); // 加载评论路由
 
 app.listen(3000);
 

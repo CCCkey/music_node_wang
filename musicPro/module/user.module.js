@@ -45,7 +45,7 @@ function login(req, callback) { // 用户登陆方法
 			callback(undefined); // 执行回调函数		
 		}else{			
 			// 登录成功，设置 session
-			let token = md5.getToken(result[0].id.toString()); // 获取token
+			let token = getToken(result[0].id.toString()); // 获取token
 			req.session.userToken = result[0].id.toString(); // 保存信息到session
 			callback(result, {"token":token}); // 执行回调函数 返回数据集、token	
 		}
